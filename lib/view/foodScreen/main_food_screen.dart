@@ -3,7 +3,7 @@ import 'package:ikhdemny/view/home_screen.dart';
 
 import '../../components/components.dart';
 import '../../components/constants.dart';
-import '../menu_screen.dart';
+import 'baik_menu/baik_menu_screen.dart';
 
 // Similar Products state full widget
 class FoodCategoryScreen extends StatefulWidget {
@@ -88,12 +88,7 @@ class SimilarSingleProduct extends StatelessWidget {
             // We can wrap an InkWell Widget by Hero Widget with tag : prod_name
             child: InkWell(
               onTap: () {
-                navigateTo(context, const MenuScreen());
-                /*Get.to(() => AllCategoryScreen(
-                  // Here we passing the value of the products to the ProductDetails screen
-                  prod_details_name: prod_name,
-                  prod_details_picture: prod_picture,
-                ));*/
+                navigateTo(context, const BaikMenuScreen());
               },
               child: GridTile(
                 footer: Container(

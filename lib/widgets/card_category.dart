@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikhdemny/components/constants.dart';
+import 'package:ikhdemny/view/foodScreen/main_food_screen.dart';
 import 'package:ikhdemny/view/modules/main_electronics_screen.dart';
-import 'package:ikhdemny/view/modules/main_food_screen.dart';
 import 'package:ikhdemny/view/modules/main_library_screen.dart';
 import 'package:ikhdemny/view/modules/main_medicine_screen.dart';
 import 'package:ikhdemny/view/modules/main_plumber_screen.dart';

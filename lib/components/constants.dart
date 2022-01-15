@@ -97,7 +97,7 @@ var enCategoryCard = [
 var foodCategoryList = [
   {
     'name': 'البيك',
-    'picture': 'assets/images/baik.png',
+    'picture': 'assets/images/baik/baik.png',
   },
   {
     'name': 'دجاج كنتاكي',

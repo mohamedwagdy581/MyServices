@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/horizontal_listview.dart';
+import '../../../widgets/horizontal_listview.dart';
 
-class MenuScreen extends StatefulWidget {
-  const MenuScreen({Key? key}) : super(key: key);
+class KfcMenuScreen extends StatefulWidget {
+  const KfcMenuScreen({Key? key}) : super(key: key);
 
   @override
-  _MenuScreenState createState() => _MenuScreenState();
+  _KfcMenuScreenState createState() => _KfcMenuScreenState();
 }
 
-class _MenuScreenState extends State<MenuScreen> {
+class _KfcMenuScreenState extends State<KfcMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -122,6 +122,7 @@ class _BaikMenuScreenState extends State<BaikMenuScreen> {
               height: 450,
               child: ListView.separated(
                 itemBuilder: (context, index) {
+                  // Here we pass data from the list model
                   return buildListTileMenu(
                     title: baikMenue[index]['title'],
                     description: baikMenue[index]['description'],

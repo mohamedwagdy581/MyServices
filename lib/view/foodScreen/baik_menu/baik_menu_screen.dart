@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ikhdemny/components/components.dart';
 import 'package:ikhdemny/view/foodScreen/baik_menu/baikModel.dart';
+import 'package:ikhdemny/view/foodScreen/main_food_screen.dart';
 
 import '../../../widgets/horizontal_listview.dart';
 
@@ -21,12 +23,30 @@ class _BaikMenuScreenState extends State<BaikMenuScreen> {
             alignment: Alignment.bottomCenter,
             children: [
               SizedBox(
-                height: 198,
-                child: Image.network(
-                    'https://www.thaqfny.com/wp-content/uploads/2020/12/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D9%85%D9%86%D9%8A%D9%88-%D8%A7%D9%84%D8%A8%D9%8A%D9%83-%D9%84%D9%84%D8%B3%D9%86%D8%A9-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9.jpg'),
-              ),
-              Container(
-                color: Colors.black,
+                height: 250,
+                child: Stack(
+                  children: [
+                    Image.network(
+                        'https://www.thaqfny.com/wp-content/uploads/2020/12/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D9%85%D9%86%D9%8A%D9%88-%D8%A7%D9%84%D8%A8%D9%8A%D9%83-%D9%84%D9%84%D8%B3%D9%86%D8%A9-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9.jpg'),
+                    Container(
+                      height: 40,
+                      alignment: Alignment.topRight,
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.only(top: 10.0, right: 15.0),
+                      child: IconButton(
+                        onPressed: () {
+                          navigateAndFinish(
+                              context, const FoodCategoryScreen());
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
@@ -293,7 +313,7 @@ class _buildListTileMenuState extends State<buildListTileMenu> {
           ],
         ),
         trailing: Image.asset(
-          'assets/images/eat.png',
+          widget.image,
           width: 60.0,
           height: 60.0,
         ),

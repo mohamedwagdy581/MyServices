@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:ikhdemny/components/components.dart';
-import 'package:ikhdemny/model/foodModels/baikModel.dart';
+import 'package:ikhdemny/model/foodModels/macModel.dart';
 import 'package:ikhdemny/view/foodScreen/main_food_screen.dart';
 
-import '../../../widgets/horizontal_listview.dart';
+import '../../../../../widgets/horizontal_listview.dart';
 
-class BaikMenuScreen extends StatefulWidget {
-  const BaikMenuScreen({Key? key}) : super(key: key);
+class MacMenuScreen extends StatefulWidget {
+  final String mainTitle;
+  final String mainImage;
+
+  const MacMenuScreen({
+    Key? key,
+    required this.mainTitle,
+    required this.mainImage,
+  }) : super(key: key);
 
   @override
-  _BaikMenuScreenState createState() => _BaikMenuScreenState();
+  _MacMenuScreenState createState() => _MacMenuScreenState();
 }
 
-class _BaikMenuScreenState extends State<BaikMenuScreen> {
-  var baikMenue = baikMenuList;
+class _MacMenuScreenState extends State<MacMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +32,9 @@ class _BaikMenuScreenState extends State<BaikMenuScreen> {
                 height: 250,
                 child: Stack(
                   children: [
-                    Image.network(
-                        'https://www.thaqfny.com/wp-content/uploads/2020/12/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D9%85%D9%86%D9%8A%D9%88-%D8%A7%D9%84%D8%A8%D9%8A%D9%83-%D9%84%D9%84%D8%B3%D9%86%D8%A9-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9.jpg'),
+                    Image.asset(
+                      widget.mainImage,
+                    ),
                     Container(
                       height: 40,
                       alignment: Alignment.topRight,
@@ -67,22 +74,22 @@ class _BaikMenuScreenState extends State<BaikMenuScreen> {
                           children: [
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     right: 15.0,
                                     top: 10.0,
                                     bottom: 10.0,
                                   ),
                                   child: Text(
-                                    'AL BAIK',
-                                    style: TextStyle(
+                                    widget.mainTitle,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20.0,
                                     ),
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                     'Fast Food, Arabian Food, Traditional Food'),
                               ],
                             ),
@@ -143,27 +150,21 @@ class _BaikMenuScreenState extends State<BaikMenuScreen> {
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   // Here we pass data from the list model
-                  return buildListTileMenu(
-                    title: baikMenue[index]['title'],
-                    description: baikMenue[index]['description'],
-                    image: baikMenue[index]['image'],
-                    price: baikMenue[index]['price'],
-                    kcal: baikMenue[index]['kcal'],
+                  MacModel kfcList = macMenuList[index];
+                  return buildMenuListTile(
+                    title: kfcList.title,
+                    description: kfcList.description,
+                    image: kfcList.image,
+                    price: kfcList.price,
+                    kcal: kfcList.kcal,
                   );
-                  /*buildOrderRow(
-                      title: baikMenue[index]['title'].toString(),
-                      description: '',
-                      image: '',
-                      price: '',
-                      kcal: '',
-                  );*/
                 },
                 separatorBuilder: (context, index) {
                   return const Divider(
                     thickness: 4.0,
                   );
                 },
-                itemCount: baikMenue.length,
+                itemCount: macMenuList.length,
               ),
             ),
           ),
@@ -201,123 +202,99 @@ class _BaikMenuScreenState extends State<BaikMenuScreen> {
     String? oldPrice,
     required String kcal,
   }) {
-    return InkWell(
+    return ListTile(
       onTap: () {},
-      child: ListTile(
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+      title: Padding(
+        padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              description,
-            ),
-            Row(
-              children: [
-                const Icon(
-                  Icons.label,
-                  color: Colors.blue,
-                ),
-                Text('$price SR'),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                const Icon(
-                  Icons.whatshot,
-                  color: Colors.grey,
-                ),
-                Text('$kcal Kcal'),
-              ],
-            ),
-          ],
-        ),
-        trailing: Image.asset(
-          'assets/images/eat.png',
-          width: 60.0,
-          height: 60.0,
-        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            description,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.label,
+                color: Colors.blue,
+              ),
+              Text('$price SR'),
+              const SizedBox(
+                width: 10.0,
+              ),
+              const Icon(
+                Icons.whatshot,
+                color: Colors.grey,
+              ),
+              Text('$kcal Kcal'),
+            ],
+          ),
+        ],
+      ),
+      trailing: Image.asset(
+        'assets/images/eat.png',
+        width: 60.0,
+        height: 60.0,
       ),
     );
   }
 }
 
-class buildListTileMenu extends StatefulWidget {
-  final dynamic title;
-  final dynamic image;
-  final dynamic description;
-  final dynamic price;
-  final dynamic oldPrice;
-  final dynamic kcal;
-
-  const buildListTileMenu({
-    Key? key,
-    this.title,
-    this.image,
-    this.description,
-    this.price,
-    this.oldPrice,
-    this.kcal,
-  }) : super(key: key);
-
-  @override
-  _buildListTileMenuState createState() => _buildListTileMenuState();
-}
-
-class _buildListTileMenuState extends State<buildListTileMenu> {
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      child: ListTile(
-        title: Padding(
-          padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
-          child: Text(
-            widget.title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              widget.description,
-            ),
-            Row(
-              children: [
-                const Icon(
-                  Icons.label,
-                  color: Colors.blue,
-                ),
-                Text('${widget.price} SR'),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                const Icon(
-                  Icons.whatshot,
-                  color: Colors.grey,
-                ),
-                Text('${widget.kcal} Kcal'),
-              ],
-            ),
-          ],
-        ),
-        trailing: Image.asset(
-          widget.image,
-          width: 60.0,
-          height: 60.0,
+Widget buildMenuListTile({
+  required String title,
+  required String description,
+  required String image,
+  required String price,
+  required String kcal,
+}) {
+  return ListTile(
+    title: Padding(
+      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
         ),
       ),
-    );
-  }
+    ),
+    subtitle: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          description,
+        ),
+        Row(
+          children: [
+            const Icon(
+              Icons.label,
+              color: Colors.blue,
+            ),
+            Text('$price SR'),
+            const SizedBox(
+              width: 10.0,
+            ),
+            const Icon(
+              Icons.whatshot,
+              color: Colors.grey,
+            ),
+            Text('$kcal Kcal'),
+          ],
+        ),
+      ],
+    ),
+    trailing: Image.asset(
+      image,
+      width: 60.0,
+      height: 60.0,
+    ),
+  );
 }

@@ -101,7 +101,7 @@ var foodCategoryList = [
   },
   {
     'name': 'دجاج كنتاكي',
-    'picture': 'assets/images/kfc.png',
+    'picture': 'assets/images/kfc/kfc.png',
   },
   {
     'name': 'الطازج',
@@ -113,7 +113,7 @@ var foodCategoryList = [
   },
   {
     'name': 'ماكدونالدز',
-    'picture': 'assets/images/mac.png',
+    'picture': 'assets/images/mac/mac.png',
   },
   {
     'name': 'هارديز',

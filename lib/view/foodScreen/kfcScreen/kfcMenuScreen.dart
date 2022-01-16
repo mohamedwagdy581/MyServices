@@ -1,15 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:ikhdemny/components/components.dart';
+import 'package:ikhdemny/model/foodModels/baikModel.dart';
+import 'package:ikhdemny/view/foodScreen/main_food_screen.dart';
 
-import '../../../widgets/horizontal_listview.dart';
+import '../../../../../widgets/horizontal_listview.dart';
+import '../../../model/foodModels/kfcModel.dart';
 
 class KfcMenuScreen extends StatefulWidget {
-  const KfcMenuScreen({Key? key}) : super(key: key);
+  final String mainTitle;
+  final String mainImage;
+
+  const KfcMenuScreen({
+    Key? key,
+    required this.mainTitle,
+    required this.mainImage,
+  }) : super(key: key);
 
   @override
   _KfcMenuScreenState createState() => _KfcMenuScreenState();
 }
 
 class _KfcMenuScreenState extends State<KfcMenuScreen> {
+  var baikMenue = baikMenuList;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,17 +32,36 @@ class _KfcMenuScreenState extends State<KfcMenuScreen> {
             alignment: Alignment.bottomCenter,
             children: [
               SizedBox(
-                height: 198,
-                child: Image.network(
-                    'https://www.thaqfny.com/wp-content/uploads/2020/12/%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D9%85%D9%86%D9%8A%D9%88-%D8%A7%D9%84%D8%A8%D9%8A%D9%83-%D9%84%D9%84%D8%B3%D9%86%D8%A9-%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9.jpg'),
-              ),
-              Container(
-                color: Colors.black,
+                height: 250,
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      widget.mainImage,
+                    ),
+                    Container(
+                      height: 40,
+                      alignment: Alignment.topRight,
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.only(top: 10.0, right: 15.0),
+                      child: IconButton(
+                        onPressed: () {
+                          navigateAndFinish(
+                              context, const FoodCategoryScreen());
+                        },
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.black,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 25.0, right: 25.0),
                 child: Container(
-                  height: 150,
+                  height: 160,
                   width: 350.0,
                   decoration: BoxDecoration(
                     color: Colors.white70,
@@ -45,22 +77,22 @@ class _KfcMenuScreenState extends State<KfcMenuScreen> {
                           children: [
                             Column(
                               mainAxisAlignment: MainAxisAlignment.start,
-                              children: const [
+                              children: [
                                 Padding(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                     right: 15.0,
                                     top: 10.0,
                                     bottom: 10.0,
                                   ),
                                   child: Text(
-                                    'AL BAIK',
-                                    style: TextStyle(
+                                    widget.mainTitle,
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20.0,
                                     ),
                                   ),
                                 ),
-                                Text(
+                                const Text(
                                     'Fast Food, Arabian Food, Traditional Food'),
                               ],
                             ),
@@ -120,14 +152,22 @@ class _KfcMenuScreenState extends State<KfcMenuScreen> {
               height: 450,
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return buildOrderRow();
+                  // Here we pass data from the list model
+                  KfcModel kfcList = kfcMenuList[index];
+                  return buildMenuListTile(
+                    title: kfcList.title,
+                    description: kfcList.description,
+                    image: kfcList.image,
+                    price: kfcList.price,
+                    kcal: kfcList.kcal,
+                  );
                 },
                 separatorBuilder: (context, index) {
                   return const Divider(
                     thickness: 4.0,
                   );
                 },
-                itemCount: 15,
+                itemCount: baikMenue.length,
               ),
             ),
           ),
@@ -157,51 +197,107 @@ class _KfcMenuScreenState extends State<KfcMenuScreen> {
     );
   }
 
-  Widget buildOrderRow() {
-    return InkWell(
+  Widget buildOrderRow({
+    required String title,
+    required String image,
+    required String description,
+    required String price,
+    String? oldPrice,
+    required String kcal,
+  }) {
+    return ListTile(
       onTap: () {},
-      child: ListTile(
-        title: const Padding(
-          padding: EdgeInsets.only(bottom: 5.0, top: 5.0),
-          child: Text(
-            '10 Piece Chicken Nuggets Mael',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+      title: Padding(
+        padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Crunchy to perfection. includes a bun, fries.',
-            ),
-            Row(
-              children: const [
-                Icon(
-                  Icons.label,
-                  color: Colors.blue,
-                ),
-                Text('1262 Kcal'),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Icon(
-                  Icons.whatshot,
-                  color: Colors.grey,
-                ),
-                Text('1262 Kcal'),
-              ],
-            ),
-          ],
-        ),
-        trailing: Image.asset(
-          'assets/images/eat.png',
-          width: 60.0,
-          height: 60.0,
-        ),
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            description,
+          ),
+          Row(
+            children: [
+              const Icon(
+                Icons.label,
+                color: Colors.blue,
+              ),
+              Text('$price SR'),
+              const SizedBox(
+                width: 10.0,
+              ),
+              const Icon(
+                Icons.whatshot,
+                color: Colors.grey,
+              ),
+              Text('$kcal Kcal'),
+            ],
+          ),
+        ],
+      ),
+      trailing: Image.asset(
+        'assets/images/eat.png',
+        width: 60.0,
+        height: 60.0,
       ),
     );
   }
+}
+
+Widget buildMenuListTile({
+  required String title,
+  required String description,
+  required String image,
+  required String price,
+  required String kcal,
+}) {
+  return ListTile(
+    title: Padding(
+      padding: const EdgeInsets.only(bottom: 5.0, top: 5.0),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+    subtitle: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          description,
+        ),
+        Row(
+          children: [
+            const Icon(
+              Icons.label,
+              color: Colors.blue,
+            ),
+            Text('$price SR'),
+            const SizedBox(
+              width: 10.0,
+            ),
+            const Icon(
+              Icons.whatshot,
+              color: Colors.grey,
+            ),
+            Text('$kcal Kcal'),
+          ],
+        ),
+      ],
+    ),
+    trailing: Image.asset(
+      image,
+      width: 60.0,
+      height: 60.0,
+    ),
+  );
 }
